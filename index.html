@@ -244,45 +244,56 @@
   }
 
   /* ---------- Cards view ---------- */
+  #cardsList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  @media (min-width: 480px) {
+    #cardsList { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  }
+  @media (min-width: 720px) {
+    #cardsList { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  }
   .month-divider {
+    grid-column: 1 / -1;
     font-family: var(--font-display);
     font-weight: 400;
     font-size: 1.05rem;
     color: var(--ink-soft);
-    margin: 22px 4px 10px;
+    margin: 16px 4px 2px;
   }
   .month-divider:first-child { margin-top: 4px; }
   .card {
     background: var(--card);
-    border-radius: 20px;
+    border-radius: 14px;
     overflow: hidden;
-    margin-bottom: 18px;
     cursor: pointer;
     position: relative;
   }
   .card-draft-tag {
     position: absolute;
-    top: 10px; left: 10px;
+    top: 6px; left: 6px;
     background: var(--ochre);
     color: #fff;
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     font-weight: 800;
-    padding: 3px 9px;
+    padding: 2px 7px;
     border-radius: 999px;
     z-index: 2;
     letter-spacing: 0.02em;
   }
-  .card-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--rose-soft); }
+  .card-image { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: var(--rose-soft); }
   .card-image-placeholder {
-    width: 100%; aspect-ratio: 4 / 3; background: var(--rose-soft);
+    width: 100%; aspect-ratio: 1 / 1; background: var(--rose-soft);
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 2.4rem; color: var(--rose);
+    font-family: var(--font-display); font-size: 1.6rem; color: var(--rose);
   }
-  .card-body { padding: 14px 18px 20px; text-align: center; }
-  .card-date { font-family: var(--font-display); font-weight: 400; font-size: 1rem; color: var(--ink-soft); margin: 0; }
-  .card-title { font-family: var(--font-display); font-weight: 400; font-size: 1.45rem; margin: 2px 0 0; line-height: 1.2; }
+  .card-body { padding: 8px 8px 12px; text-align: center; }
+  .card-date { font-family: var(--font-display); font-weight: 400; font-size: 0.72rem; color: var(--ink-soft); margin: 0; }
+  .card-title { font-family: var(--font-display); font-weight: 400; font-size: 1rem; margin: 2px 0 0; line-height: 1.15; }
 
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); }
+  .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--ink-soft); }
   .empty-state p { font-size: 0.95rem; line-height: 1.6; }
 
   /* ---------- FAB ---------- */
@@ -329,8 +340,8 @@
 
   .view-image { width: 100%; max-height: 480px; object-fit: cover; border-radius: 16px; display: block; }
   .entry-img { max-width: 100%; border-radius: 14px; display: block; margin: 16px auto; }
-  .view-date { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; color: var(--ink-soft); text-align: center; margin: 18px 0 0; }
-  .view-title { font-family: var(--font-display); font-weight: 400; font-size: 1.75rem; text-align: center; margin: 2px 0 14px; }
+  .view-date { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; color: var(--ink-soft); text-align: center; margin: 44px 0 0; }
+  .view-title { font-family: var(--font-display); font-weight: 400; font-size: 1.75rem; text-align: center; margin: 4px 0 34px; }
   .view-text { font-size: 1.08rem; line-height: 1.75; margin: 0 0 20px; }
   .view-text p { margin: 0 0 12px; }
   .view-text p:last-child { margin-bottom: 0; }
@@ -559,7 +570,7 @@
           } else if (child.tagName === 'IMG') {
             var src = child.getAttribute('src') || '';
             while (child.attributes.length > 0) child.removeAttribute(child.attributes[0].name);
-            if (src.indexOf('/_blob/') === 0) {
+            if (src.indexOf('/_blob/') === 0 || src.indexOf('data:image/') === 0) {
               child.setAttribute('src', src);
               child.setAttribute('class', 'entry-img');
             } else {
